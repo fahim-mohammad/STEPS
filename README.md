@@ -1,103 +1,12 @@
-# STEPS - Student Fund Management System
+# STEPS System
 
-A professional student fund management web application built with Next.js, featuring role-based access, member management, contribution tracking, and fund analysis.
-
-## Features
-
-### Core Features
-- **Authentication**: Secure signup and login system
-- **Role-Based Access**: Member, Chairman, and Accountant roles with full role switching
-- **Bilingual UI**: Complete English and Bangla language support
-- **Member Management**: Approve/reject member applications, view member information
-- **Contribution Tracking**: Record member contributions with multiple payment methods (Cash, Bank, bKash, Nagad, Rocket)
-- **Fund Dashboard**: Real-time fund balance, member statistics, and financial health indicators
-- **Bank Investments**: Track DPS (monthly savings) and FDR (fixed deposits)
-- **Charity Tracking**: Record and monitor charitable activities
-- **Community**: WhatsApp community access for approved members only
-- **Theme Support**: Light and dark mode support
-
-### Admin Features
-- Manage member approvals
-- Set contribution amounts for specific years
-- View and manage fund investments
-- Track financial records
-- Role administration
-
-### Security
-- Row-level access control based on user roles
-- Loan data privacy (only borrower, chairman, and accountant can view)
-- Password-protected authentication
-- Session management
-
-## Getting Started
-
-### Installation
-
-1. Clone the repository or download the code
-2. Use the shadcn CLI to set up the project:
-   ```bash
-   npx shadcn-cli@latest init
-   ```
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-### Running the Application
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view the application.
-
-### First Time Setup
-
-1. **Create a test account**:
-   - Visit the homepage and click "Join Fund"
-   - Fill in your details (Name, Phone, Email, Password)
-   - You will be automatically logged in
-
-2. **For testing admin features**:
-   - Create a second account for admin testing
-   - Update the user role in browser DevTools localStorage if needed
-   - Reload the page to see admin features
-
-### Demo Credentials
-
-For development/testing, you can:
-1. Create multiple accounts to test member and admin flows
-2. Use the Admin Dashboard to approve members
-3. Set contribution amounts for different years
-4. Switch between roles using the role switch feature in the 3-dot menu
-
-## Application Structure
-
-### Key Pages
-- `/` - Homepage (shows "Join Fund" and "Sign In" for guests, redirects to dashboard for logged-in users)
-- `/signin` - Login page
-- `/signup` - Registration page
-- `/dashboard` - Main dashboard showing fund statistics
-- `/members` - Members list (view-only for regular members, full management for admins)
-- `/profile` - User profile information
-- `/settings` - User preferences (theme, language, notifications)
-- `/community` - WhatsApp community access (approved members only)
-
-### Admin Pages
-- `/admin` - Admin dashboard with quick stats
-- `/admin/members` - Member approval and management
-- `/admin/contributions` - Set contribution amounts
-- `/admin/investments` - Manage DPS/FDR investments
-- `/admin/charity` - Charity tracking
-- `/admin/loans` - Manage private loans
-- `/admin/settings` - Admin settings
-- `/admin/reports` - Financial reports
-
-## Data Storage
-
-The application uses browser localStorage for data persistence. All user data, member information, contributions, and fund records are stored locally.
-
-### Data Structure
+Full-stack fund management system with:
+- Contributions
+- Profit distribution (Halal/Haram separation)
+- Expense tracking
+- BKash fee handling
+- Admin dashboard
+- AI backend support
 
 #### Users
 - Email, password, name, phone

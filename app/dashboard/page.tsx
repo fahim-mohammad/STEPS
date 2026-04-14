@@ -63,17 +63,6 @@ const DashboardCharts = dynamic(
   { ssr: false }
 )
 
-
-const AdminAISuggestionsCard = dynamic(
-  () => import('@/components/admin-ai-suggestions-card').then((m) => m.AdminAISuggestionsCard),
-  { ssr: false }
-)
-
-const MemberAISuggestionsCard = dynamic(
-  () => import('@/components/member-ai-suggestions-card').then((m) => m.MemberAISuggestionsCard),
-  { ssr: false }
-)
-
 type AlertPurpose =
   | 'general'
   | 'contribution_reminder'
@@ -1358,28 +1347,6 @@ useEffect(() => {
           language={language}
           lastUpdated={new Date()}
         />
-
-        {isMember ? (
-          <MemberAISuggestionsCard
-            language={language}
-            currentDue={totalDueAmount}
-            currentFine={fineCarryover}
-            myPendingContributions={myPendingCountMember}
-            myApprovedContributions={myApprovedCount}
-            nextDueLabel={nextDueLabel}
-            fundBalance={fundBalance}
-            onGoPay={() => router.push('/contributions/submit')}
-            onGoReceipts={() => router.push('/receipts')}
-          />
-        ) : (
-          <AdminAISuggestionsCard
-            language={language}
-            fundBalance={Number(fundBalance || 0)}
-            pendingMembers={Number(pendingCount || 0)}
-            missingContributors={Number(missingContrib.length || 0)}
-            fundHealthLabel={(adminHealth as any)?.label || null}
-          />
-        )}
 
         <div className="mt-1">
           <h3 className="text-lg font-semibold mb-3">

@@ -11,7 +11,6 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
-import { AiAssistantCard } from '@/components/ai-assistant-card'
 import { getMyProfile, updateMyProfile, getMyContributionRank, getTopContributors } from '@/lib/data-store'
 import SignaturePad from '@/components/signature-pad'
 
@@ -185,14 +184,6 @@ export default function ProfilePage() {
             )}
           </CardContent>
         </Card>
-
-        <div className="mb-6">
-          <AiAssistantCard
-  language={language}
-  title={t('auto_ask_steps_ai_about_your_profile')}
-  contextHint={`Role: ${effectiveRole}, Badge: ${rank?.badge ?? 'none'}, Rank: ${rank?.rank ?? 'n/a'}, Year: ${rankYear}`}
-/>
-        </div>
 
         <Card className="card-glass">
           <CardHeader>
