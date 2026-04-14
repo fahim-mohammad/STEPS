@@ -186,6 +186,9 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    // Dynamically import PDF generator only when needed
+    const { generateCertificatePdfBuffer } = await import('@/lib/pdf/certificate')
+
     const user = await requireUser(req)
     await requireAdmin(user.id)
 
