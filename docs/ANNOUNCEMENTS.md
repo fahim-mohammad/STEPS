@@ -1,0 +1,1 @@
+Chairman posts announcements; members receive email.

@@ -1,0 +1,330 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* =========================================
+   BASE
+   ========================================= */
+html,
+body {
+  height: 100%;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html {
+  background: transparent;
+  position: relative;
+  isolation: isolate;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: transparent !important;
+  color: #0f172a;
+}
+
+/* Ensure Next root wrappers never paint white */
+body > div,
+#__next {
+  background: transparent !important;
+}
+
+.dark body {
+  color: #f8fafc;
+}
+
+/* =========================================
+   ALWAYS-ON BACKGROUND
+   ========================================= */
+
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: url("/bg.jpeg") center / cover no-repeat;
+
+  /* removed warm tint */
+  filter: blur(4px) saturate(0.9) brightness(0.98);
+  transform: scale(1.05);
+}
+
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  /* cooler white / blue atmosphere */
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(190, 220, 255, 0.16), transparent 60%),
+    radial-gradient(900px 520px at 80% 20%, rgba(170, 210, 255, 0.12), transparent 65%),
+    linear-gradient(to bottom, rgba(30, 60, 120, 0.12), rgba(30, 60, 120, 0.18));
+}
+
+.dark html::after {
+  background:
+    radial-gradient(900px 520px at 20% 10%, rgba(90, 140, 255, 0.18), transparent 60%),
+    radial-gradient(900px 520px at 80% 20%, rgba(60, 120, 255, 0.12), transparent 65%),
+    linear-gradient(to bottom, rgba(5, 10, 20, 0.65), rgba(5, 10, 20, 0.45));
+}
+
+/* =========================================
+   iOS RADIUS TOKENS
+   ========================================= */
+
+.ios-round {
+  border-radius: 26px !important;
+}
+
+.ios-tile {
+  border-radius: 20px !important;
+}
+
+/* =========================================
+   GLASS UI HELPERS
+   ========================================= */
+
+.glass {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+
+  /* cooler shadow */
+  box-shadow: 0 14px 36px rgba(20, 60, 120, 0.18);
+}
+
+/* stronger glass for big panels */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+
+  box-shadow: 0 18px 48px rgba(30, 80, 160, 0.20);
+}
+
+/* softer glass for inputs */
+
+.glass-sm {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+  box-shadow: 0 10px 26px rgba(20, 60, 120, 0.14);
+  color: #0f172a;
+}
+
+/* =========================================
+   Buttons / Cards
+   ========================================= */
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border: 1px solid rgba(255, 255, 255, 0.26) !important;
+  backdrop-filter: blur(20px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+
+  box-shadow: 0 12px 30px rgba(30, 70, 140, 0.18) !important;
+
+  border-radius: 18px !important;
+}
+
+.btn-glass:hover {
+  filter: brightness(1.05);
+}
+
+.btn-glass:active {
+  transform: scale(0.98);
+}
+
+.card-glass {
+  background: rgba(255, 255, 255, 0.10) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
+  backdrop-filter: blur(22px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
+
+  box-shadow: 0 16px 46px rgba(20, 60, 120, 0.16) !important;
+
+  border-radius: 26px !important;
+  color: rgba(15, 23, 42, 0.95);
+}
+
+/* =========================================
+   Dark mode glass
+   ========================================= */
+
+.dark .glass,
+.dark .glass-panel,
+.dark .glass-sm,
+.dark .btn-glass,
+.dark .card-glass {
+  background: rgba(15, 23, 42, 0.30) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45) !important;
+
+  color: rgba(248, 250, 252, 0.95) !important;
+}
+
+/* =========================================
+   Dropdown z-index
+   ========================================= */
+
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}
+
+/* =========================================
+   Inputs
+   ========================================= */
+
+input,
+textarea,
+select {
+  color: inherit;
+}
+
+::placeholder {
+  color: rgba(15, 23, 42, 0.55);
+}
+
+.dark ::placeholder {
+  color: rgba(248, 250, 252, 0.55);
+}
+
+/* =========================================
+   Prevent flat white backgrounds
+   ========================================= */
+
+.bg-background {
+  background-color: transparent !important;
+}
+
+.bg-muted {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.dark .bg-muted {
+  background-color: rgba(15, 23, 42, 0.22) !important;
+}
+
+/* =========================================
+   Tables
+   ========================================= */
+
+table {
+  background: transparent !important;
+}
+
+thead tr {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dark thead tr {
+  background: rgba(15, 23, 42, 0.22);
+}
+
+tbody tr {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dark tbody tr {
+  background: rgba(15, 23, 42, 0.16);
+}
+
+/* =========================================
+   NAVBAR
+   ========================================= */
+
+.nav-glass {
+  background: rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+
+  box-shadow: 0 14px 34px rgba(30, 70, 140, 0.18);
+}
+
+.dark .nav-glass {
+  background: rgba(15, 23, 42, 0.24);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+/* =========================================
+   WIDGET CARD
+   ========================================= */
+
+.widget {
+  background: rgba(255, 255, 255, 0.14) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+
+  backdrop-filter: blur(24px) saturate(170%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(170%) !important;
+
+  box-shadow: 0 18px 50px rgba(30, 70, 140, 0.18) !important;
+
+  border-radius: 28px !important;
+}
+
+.dark .widget {
+  background: rgba(15, 23, 42, 0.26) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* =========================================
+   Floating animation
+   ========================================= */
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.floaty {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floaty { animation: none !important; }
+}
+
+/* =========================================
+   Icon buttons
+   ========================================= */
+
+.icon-glass {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  border-radius: 14px;
+
+  box-shadow: 0 12px 26px rgba(30, 70, 140, 0.16);
+}
+
+.dark .icon-glass {
+  background: rgba(15, 23, 42, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+button, .button, [role="button"] {
+  word-spacing: 0.14em;
+}

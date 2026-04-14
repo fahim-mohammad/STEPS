@@ -1,0 +1,1 @@
+Admins upload bank slips, FDR docs, and store securely per investment.

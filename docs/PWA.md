@@ -1,0 +1,1 @@
+Progressive Web App enabled via manifest.json and sw.js.

@@ -1,0 +1,1 @@
+Manual admin-controlled fine system. No automation.

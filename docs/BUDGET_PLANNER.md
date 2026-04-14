@@ -1,0 +1,1 @@
+Plan next year's expected inflows, investments, and charity.

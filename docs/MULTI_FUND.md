@@ -1,0 +1,1 @@
+funds(id,name,description); memberships(user_id,fund_id,role).

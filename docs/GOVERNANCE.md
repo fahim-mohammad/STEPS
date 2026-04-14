@@ -1,0 +1,4 @@
+- SLA: auto-flag pending > X days, send email via /api/email.
+- Audit: every approve/edit/delete must call audit logger.
+- Roles: Chairman vs Accountant dashboards split by KPI sets.
+- Privacy: loans never exposed to member queries or AI.

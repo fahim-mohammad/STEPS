@@ -1,0 +1,1 @@
+Each receipt contains QR linking to /receipt/verify/{id}.
