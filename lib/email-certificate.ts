@@ -1,5 +1,3 @@
-import { Resend } from 'resend'
-
 export async function sendCertificateEmail(params: {
   to: string
   recipientName: string
@@ -7,6 +5,9 @@ export async function sendCertificateEmail(params: {
   verifyUrl: string
   pdfBase64: string
 }) {
+  // Dynamically import Resend only when needed to reduce bundle size
+  const { Resend } = await import('resend')
+  
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('Missing RESEND_API_KEY')
   const resend = new Resend(apiKey)

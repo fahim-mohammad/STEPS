@@ -1,6 +1,3 @@
-import jsPDF from "jspdf"
-import autoTable from "jspdf-autotable"
-
 export interface AdminReportData {
   lang?: "en" | "bn"
   fundBalance: number
@@ -28,7 +25,13 @@ const MONTHS_EN = [
   "July","August","September","October","November","December",
 ]
 
-export function generateAndDownloadContributionsReport(data: AdminReportData) {
+export async function generateAndDownloadContributionsReport(data: AdminReportData) {
+  // Dynamically import heavy PDF libraries only when this function is called
+  const jsPDFModule = await import('jspdf')
+  const { default: jsPDF } = jsPDFModule
+  const autoTableModule = await import('jspdf-autotable')
+  const { default: autoTable } = autoTableModule
+  
   const pdf = new jsPDF({
     orientation: "portrait",
     unit: "mm",

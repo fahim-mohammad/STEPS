@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import autoTable from 'jspdf-autotable'
 import { registerBanglaFonts, getPdfFont, fmtDate } from '@/lib/pdf/pdf-fronts'
 
 type StatementRow = {
@@ -39,8 +38,10 @@ function bnDigits(input: string) {
 }
 
 export async function generateStatementPdfBuffer(input: StatementPdfInput) {
-  // Dynamically import heavy PDF library only when this function is called
+  // Dynamically import heavy PDF libraries only when this function is called
   const { jsPDF } = await import('jspdf')
+  const autoTableModule = await import('jspdf-autotable')
+  const { default: autoTable } = autoTableModule
 
   const doc = new jsPDF({ unit: 'pt', format: 'a4' })
   const pageW = doc.internal.pageSize.getWidth()

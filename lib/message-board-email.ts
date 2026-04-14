@@ -1,5 +1,3 @@
-import { Resend } from 'resend'
-
 export function renderMessageBoardEmail(params: { title: string; body: string; baseUrl?: string }) {
   const baseUrl = params.baseUrl || ''
   const safeTitle = params.title || 'Update from Chairman'
@@ -20,6 +18,9 @@ export function renderMessageBoardEmail(params: { title: string; body: string; b
 }
 
 export async function sendChairmanBroadcastEmail(params: { to: string[]; title: string; body: string }) {
+  // Dynamically import Resend only when needed to reduce bundle size
+  const { Resend } = await import('resend')
+  
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('Missing RESEND_API_KEY')
   const from = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'

@@ -7,12 +7,16 @@ const withBundleAnalyzerConfig = withBundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+
   typescript: {
     ignoreBuildErrors: true,
   },
+
   images: {
     unoptimized: true,
   },
+
+  // ✅ CRITICAL: Reduce serverless bundle size
   serverExternalPackages: [
     'sharp',
     'pdfkit',
@@ -26,20 +30,24 @@ const nextConfig = {
     'puppeteer',
     'qrcode',
   ],
+
+  // ✅ MOVE OUT OF experimental (FIXED)
+  outputFileTracingExcludes: {
+    '*': [
+      './node_modules/@swc/**',
+      './node_modules/tailwindcss/**',
+      './node_modules/postcss/**',
+      './node_modules/autoprefixer/**',
+      './node_modules/next/dist/compiled/@swc/**',
+    ],
+  },
+
   productionBrowserSourceMaps: false,
   compress: true,
   poweredByHeader: false,
+
   experimental: {
     optimizePackageImports: ['@radix-ui', '@supabase'],
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/@swc',
-        'node_modules/tailwindcss',
-        'node_modules/postcss',
-        'node_modules/autoprefixer',
-        'node_modules/next/dist/compiled/@swc',
-      ],
-    },
   },
 }
 

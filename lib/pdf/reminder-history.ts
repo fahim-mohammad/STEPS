@@ -1,10 +1,13 @@
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
-
 export async function generateAndDownloadReminderHistoryReport(
   items: any[],
   opts?: { title?: string }
 ) {
+  // Dynamically import heavy PDF libraries only when this function is called
+  const jsPDFModule = await import('jspdf')
+  const { default: jsPDF } = jsPDFModule
+  const autoTableModule = await import('jspdf-autotable')
+  const { default: autoTable } = autoTableModule
+  
   const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
 
   const title = opts?.title || 'Reminder History'

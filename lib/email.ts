@@ -1,11 +1,13 @@
-import { Resend } from 'resend'
-import renderReceiptHtml from './receipt-templates'
 import { supabaseAdmin } from './supabase/admin'
-import { generateReceiptPdfBuffer } from './pdf/receipt'
-import { getLeadershipSignatures, toDataUrl } from './signatures'
 
 export async function sendReceiptEmailByContributionId(contributionId: string) {
   try {
+    // Dynamically import heavy dependencies only when this function is called
+    const { Resend } = await import('resend')
+    const renderReceiptHtml = (await import('./receipt-templates')).default
+    const { generateReceiptPdfBuffer } = await import('./pdf/receipt')
+    const { getLeadershipSignatures, toDataUrl } = await import('./signatures')
+
     const { data: contrib, error: contribErr } = await supabaseAdmin.from('contributions').select('*').eq('id', contributionId).single()
     if (contribErr || !contrib) throw contribErr || new Error('contribution not found')
 
