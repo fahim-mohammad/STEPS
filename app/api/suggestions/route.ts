@@ -3,6 +3,10 @@ import { requireUser } from '@/lib/auth'
 import { supabaseServer } from '@/lib/supabase/serverClient'
 import { supabase } from '@/lib/supabase/client'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: Request) {
   try {
     const user = await requireUser()

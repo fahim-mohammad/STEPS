@@ -3,6 +3,10 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateReceiptPdfBuffer } from '@/lib/pdf/receipt'
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url)

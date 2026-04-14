@@ -7,6 +7,10 @@ import { ThemeProvider } from "@/components/theme-provider"
 export const metadata: Metadata = {
   title: "STEPS",
   description: "Student Fund Management Web App",
+  icons: {
+    icon: '/apple-icon.png',
+    apple: '/apple-icon.png',
+  },
 }
 
 export default function RootLayout({

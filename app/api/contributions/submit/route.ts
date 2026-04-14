@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase/client'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 function isApprovedContribution(row: any) {
   if (!row) return false
   if (typeof row.status === 'string') return row.status.toLowerCase() === 'approved'

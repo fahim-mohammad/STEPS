@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { supabaseServer } from '@/lib/supabase/serverClient'
 import { supabase } from '@/lib/supabase/client';
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 const MONTH_NAMES_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 type Override = { month: number; amount: number }

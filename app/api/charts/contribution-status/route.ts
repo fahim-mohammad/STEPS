@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server'
 import { requireUser } from '@/lib/auth'
 import { supabaseServer } from '@/lib/supabase/serverClient'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const user = await requireUser()

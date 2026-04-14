@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase/client'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   try {
     const { data } = await supabase.from('admin_exports').select('*').order('created_at', { ascending: false }).limit(20)

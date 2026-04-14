@@ -3,6 +3,10 @@ import {  } from '@/lib/supabase/serverClient'
 import { requireUser, requireAdmin } from '@/lib/auth'
 import { supabase } from '@/lib/supabase/client';
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 type Override = { month: number; amount: number }
 
 export async function POST(req: Request) {

@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 
+
+export const runtime = 'nodejs'
+
 export const dynamic = 'force-dynamic'
 
 function sumAmount(rows: any[] | null | undefined, field: string): number {

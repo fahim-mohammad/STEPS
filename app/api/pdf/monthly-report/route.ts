@@ -3,6 +3,10 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { generateMonthlyFundReportPdfBuffer } from '@/lib/pdf/monthly-report'
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 function isApprovedContribution(row: any) {
   if (!row) return false
   if (typeof row.approved !== 'undefined') return Boolean(row.approved)

@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { computeReceiptHashShort } from '@/lib/pdf/receipt'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 function must(v: string | undefined, name: string) {
   if (!v) throw new Error(`Missing env: ${name}`)
   return v

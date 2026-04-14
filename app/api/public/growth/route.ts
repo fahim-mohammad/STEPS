@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabaseServer } from '@/lib/supabase/serverClient'
 
+
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 const START_YEAR = 2025
 const YEARS = 5
 
