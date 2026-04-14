@@ -1,4 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import { cookies } from 'next/headers'
 
 const supabaseUrl =
   process.env.SUPABASE_URL ||
@@ -47,8 +48,9 @@ function createStubClient(): any {
 
 /**
  * Export as FUNCTION (IMPORTANT FIX)
+ * Now with optional Request parameter for cookie handling
  */
-export function supabaseServer(): SupabaseClient | any {
+export function supabaseServer(req?: Request): SupabaseClient | any {
   if (!supabaseUrl || !supabaseServiceRole) {
     return createStubClient()
   }
@@ -56,6 +58,15 @@ export function supabaseServer(): SupabaseClient | any {
   return createClient(supabaseUrl, supabaseServiceRole, {
     auth: {
       persistSession: false,
+      autoRefreshToken: false,
+    },
+    global: {
+      headers: req
+        ? {
+            // Pass cookies from request headers to maintain session context
+            cookie: req.headers.get('cookie') || '',
+          }
+        : {},
     },
   })
 }

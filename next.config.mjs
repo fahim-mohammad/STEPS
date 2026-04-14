@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  serverExternalPackages: ['jspdf', 'qrcode', 'canvas', 'pdfkit', 'sharp'],
 }
 
 export default nextConfig

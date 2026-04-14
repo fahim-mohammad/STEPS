@@ -42,7 +42,7 @@ function isPublicAsset(pathname: string) {
   return PUBLIC_FILE_EXTENSIONS.some((ext) => pathname.toLowerCase().endsWith(ext))
 }
 
-export function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Always allow public assets
