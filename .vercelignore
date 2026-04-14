@@ -1,0 +1,9 @@
+# Exclude local storage and build artifacts
+storage/
+.git/
+.env.local
+.env.*.local
+dist/
+build/
+*.log
+node_modules/.cache/
