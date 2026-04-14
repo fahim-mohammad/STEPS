@@ -73,28 +73,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true)
 
     try {
-      // Try to get session, handling refresh token errors
-      let { data } = await supabase.auth.getSession()
-      
-      // If refresh token is invalid/missing, attempt to refresh
-      if (!data?.session && typeof window !== 'undefined') {
-        try {
-          // Attempt to recover session from storage
-          const { data: refreshData } = await supabase.auth.refreshSession()
-          data = refreshData
-        } catch (refreshError) {
-          // If refresh fails, clear session
-          console.warn('Session refresh failed, clearing auth')
-          setUser(null)
-          setEffectiveRoleState('member')
-          clearCookie('steps_auth')
-          clearCookie('steps_access_token')
-          clearCookie('steps_approved')
-          return
-        }
-      }
-
-      const sessionUser = data?.session?.user
+      const { data } = await supabase.auth.getSession()
+      const sessionUser = data.session?.user
 
       if (!sessionUser) {
         setUser(null)
@@ -108,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setCookie('steps_auth', '1')
 
-      const accessToken = data?.session?.access_token
+      const accessToken = data.session?.access_token
       if (accessToken) setCookie('steps_access_token', encodeURIComponent(accessToken))
 
       setUser((prev) => ({
@@ -167,21 +147,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setEffectiveRoleState(eff)
 
       setCookie('steps_approved', realUser.approved ? '1' : '0')
-    } catch (error: any) {
-      console.error('AUTH_LOAD_ERROR', error?.message || error)
-      
-      // If error is refresh token related, clear session
-      if (error?.message?.includes('Refresh Token') || 
-          error?.message?.includes('refresh_token') ||
-          error?.message?.includes('Invalid') ||
-          error?.status === 401) {
-        clearCookie('steps_auth')
-        clearCookie('steps_access_token')
-        clearCookie('steps_approved')
-      }
-      
+    } catch (error) {
+      console.error('AUTH_LOAD_ERROR', error)
       setUser(null)
       setEffectiveRoleState('member')
+      clearCookie('steps_auth')
+      clearCookie('steps_access_token')
+      clearCookie('steps_approved')
     } finally {
       setIsLoading(false)
     }

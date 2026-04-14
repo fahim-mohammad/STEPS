@@ -18,40 +18,11 @@ let supabaseInstance: any = null
 
 export function getSupabaseClient(): any {
   if (!supabaseInstance) {
-    // Check if we're in browser environment
-    const isBrowser = typeof window !== 'undefined'
-    
     supabaseInstance = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
-        persistSession: isBrowser,
-        autoRefreshToken: isBrowser,
-        detectSessionInUrl: isBrowser,
-        flowType: 'pkce',
-        storage: isBrowser
-          ? {
-              getItem: (key: string) => {
-                try {
-                  return localStorage?.getItem(key) || null
-                } catch {
-                  return null
-                }
-              },
-              setItem: (key: string, value: string) => {
-                try {
-                  localStorage?.setItem(key, value)
-                } catch {
-                  // Silently fail if storage is unavailable
-                }
-              },
-              removeItem: (key: string) => {
-                try {
-                  localStorage?.removeItem(key)
-                } catch {
-                  // Silently fail if storage is unavailable
-                }
-              },
-            }
-          : undefined,
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
       },
     }) as any
   }

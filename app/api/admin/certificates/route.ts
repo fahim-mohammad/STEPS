@@ -1,10 +1,16 @@
 export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
 
 import { NextResponse } from 'next/server'
+import fs from 'fs/promises'
+import path from 'path'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { requireUser } from '@/lib/api/auth'
-import { type CertificateTemplateKey } from '@/lib/pdf/certificate'
+import {
+  generateCertificatePdfBuffer,
+  type CertificateTemplateKey,
+} from '@/lib/pdf/certificate'
+import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
+import { sendCertificateEmail } from '@/lib/email-certificate'
 import { generateCertificateHashes } from '@/lib/certificate-chain'
 
 async function requireAdmin(userId: string) {
@@ -247,6 +253,36 @@ export async function POST(req: Request) {
       aiMessage = customMessage.trim().slice(0, 240)
     }
 
+    const sig = await getLeadershipSignatures()
+    const chairmanSig = await toDataUrl(sig.chairman)
+    const accountantSig = await toDataUrl(sig.accountant)
+
+    const picked = pickSignatures({
+      roleTitle: finalRoleTitle,
+      chairmanSig,
+      accountantSig,
+      recipientName,
+    })
+
+    const pdfBuf = await generateCertificatePdfBuffer({
+      certificateId,
+      recipientName,
+      roleTitle: finalRoleTitle,
+      templateKey: key,
+      language: lang,
+      issueDateISO,
+      verifyUrl,
+      aiMessage,
+      signatures: picked,
+    })
+
+    const storageDir = path.join(process.cwd(), 'storage', 'certificates')
+    await fs.mkdir(storageDir, { recursive: true })
+
+    const pdfFile = `${certificateId}.pdf`
+    const pdfPath = path.join(storageDir, pdfFile)
+    await fs.writeFile(pdfPath, pdfBuf)
+
     const insertPayload: any = {
       certificate_id: certificateId,
       certificate_hash: hashes.certificateHash,
@@ -262,10 +298,10 @@ export async function POST(req: Request) {
       issue_date: issueDateISO,
       issued_by: user.id,
       issued_by_user_id: user.id,
-      status: 'pending_generation',
+      status: 'active',
       qr_verify_url: verifyUrl,
-      language: lang,
-      use_ai_message: useAIMessage || false,
+      pdf_path: pdfPath,
+      pdf_storage_key: pdfFile,
     }
 
     const { data: cert, error: insertErr } = await supabaseAdmin
@@ -281,22 +317,39 @@ export async function POST(req: Request) {
 
     await supabaseAdmin.from('certificate_events').insert({
       certificate_id: (cert as any).id,
-      action: 'CREATED',
+      action: 'ISSUED',
       actor_id: user.id,
       meta: {
         ip,
         user_agent: ua,
         certificate_code: certificateId,
         certificate_hash: hashes.certificateHash,
+        certificate_block_hash: hashes.blockHash,
       },
     })
+
+    try {
+      await sendCertificateEmail({
+        to: recipientEmail,
+        recipientName,
+        certificateId,
+        verifyUrl,
+        pdfBase64: pdfBuf.toString('base64'),
+      })
+    } catch (e) {
+      return NextResponse.json({
+        ok: true,
+        data: cert,
+        verifyUrl,
+        email: { ok: false, error: String(e) },
+      })
+    }
 
     return NextResponse.json({
       ok: true,
       data: cert,
-      certificateId,
       verifyUrl,
-      status: 'pending_generation',
+      email: { ok: true },
     })
   } catch (e: any) {
     return NextResponse.json(
