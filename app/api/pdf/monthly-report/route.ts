@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { generateMonthlyFundReportPdfBuffer } from '@/lib/pdf/monthly-report'
+
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 
 
@@ -16,6 +16,9 @@ function isApprovedContribution(row: any) {
 
 export async function GET(req: Request) {
   try {
+    // Dynamically import PDF generator only when needed
+    const { generateMonthlyFundReportPdfBuffer } = await import('@/lib/pdf/monthly-report')
+
     const url = new URL(req.url)
     const month = Number(url.searchParams.get('month') || 0)
     const year = Number(url.searchParams.get('year') || 0)

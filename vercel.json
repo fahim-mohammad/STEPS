@@ -1,0 +1,27 @@
+{
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install --prefer-offline",
+  "env": {
+    "NEXT_PUBLIC_APP_URL": "@app_url",
+    "DATABASE_URL": "@database_url",
+    "SUPABASE_URL": "@supabase_url",
+    "SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key"
+  },
+  "functions": {
+    "app/api/**": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "app/api/pdf/**": {
+      "maxDuration": 30,
+      "memory": 1024
+    }
+  },
+  "regions": ["bom1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  }
+}

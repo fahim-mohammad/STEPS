@@ -2,7 +2,6 @@ export const runtime = 'nodejs'
 
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { Resend } from 'resend'
 import { renderPendingFollowupEmail } from '@/lib/followup-email'
 
 function checkCronSecret(req: Request) {
@@ -145,6 +144,9 @@ export async function POST(req: Request) {
 
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) throw new Error('Missing RESEND_API_KEY')
+    
+    // Dynamically import Resend only when needed
+    const { Resend } = await import('resend')
     const resend = new Resend(apiKey)
     const from = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || ''

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { generateReceiptPdfBuffer } from '@/lib/pdf/receipt'
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 
 
@@ -40,6 +39,9 @@ export async function GET(req: Request) {
     const sig = await getLeadershipSignatures()
     const chairman = await toDataUrl(sig.chairman)
     const accountant = await toDataUrl(sig.accountant)
+
+    // Dynamically import PDF generator only when needed
+    const { generateReceiptPdfBuffer } = await import('@/lib/pdf/receipt')
 
     const pdf = await generateReceiptPdfBuffer({
       contribution: contrib,

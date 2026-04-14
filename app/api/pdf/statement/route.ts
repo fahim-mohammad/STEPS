@@ -2,7 +2,7 @@ export const runtime = 'nodejs'
 
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { generateStatementPdfBuffer } from '@/lib/pdf/statement-server'
+
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 import { requireUser } from '@/lib/api/auth'
 
@@ -15,6 +15,9 @@ function isApprovedContribution(row: any) {
 
 export async function GET(req: Request) {
   try {
+    // Dynamically import PDF generator only when needed
+    const { generateStatementPdfBuffer } = await import('@/lib/pdf/statement-server')
+
     // ✅ must be logged in
     const u = await requireUser(req)
 

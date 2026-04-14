@@ -5,10 +5,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { requireUser } from '@/lib/api/auth'
-import {
-  generateCertificatePdfBuffer,
-  type CertificateTemplateKey,
-} from '@/lib/pdf/certificate'
+import type { CertificateTemplateKey } from '@/lib/pdf/certificate'
 import { getLeadershipSignatures, toDataUrl } from '@/lib/signatures'
 import { sendCertificateEmail } from '@/lib/email-certificate'
 import { generateCertificateHashes } from '@/lib/certificate-chain'
@@ -150,6 +147,9 @@ function pickSignatures(params: {
 
 export async function GET(req: Request) {
   try {
+    // Dynamically import PDF generator only when needed
+    const { generateCertificatePdfBuffer } = await import('@/lib/pdf/certificate')
+
     const user = await requireUser(req)
     await requireAdmin(user.id)
 
