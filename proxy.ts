@@ -42,7 +42,7 @@ function isPublicAsset(pathname: string) {
   return PUBLIC_FILE_EXTENSIONS.some((ext) => pathname.toLowerCase().endsWith(ext))
 }
 
-export function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Always allow public assets
@@ -79,13 +79,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    /*
-      Match all request paths except:
-      - api routes that should stay public only if they are under /api/public
-      - next internals
-      - static files by extension
-    */
-    '/((?!_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }

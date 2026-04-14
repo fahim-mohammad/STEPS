@@ -3,35 +3,12 @@ export const runtime = 'nodejs'
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { requireUser } from '@/lib/api/auth'
-
-async function requireAdmin(userId: string) {
-  const { data, error } = await supabaseAdmin
-    .from('profiles')
-    .select('role, approved')
-    .eq('id', userId)
-    .maybeSingle()
-
-  if (error) throw new Error(error.message)
-
-  const role = (data as any)?.role
-  const approved = (data as any)?.approved
-
-  if (!approved || (role !== 'chairman' && role !== 'accountant')) {
-    throw new Error('Admin required')
-  }
-}
-
-function isApprovedContribution(row: any) {
-  if (!row) return false
-  if (typeof row.status === 'string') {
-    if (row.status.toLowerCase() === 'approved') return true
-  }
-  if (typeof row.approved !== 'undefined') {
-    if (Boolean(row.approved)) return true
-  }
-  if (row.approved_at) return true
-  return false
-}
+import {
+  requireAdmin,
+  isApprovedContribution,
+  validateProfitAmount,
+  isBankInterestType,
+} from '@/lib/services/profit-distribution'
 
 export async function POST(req: Request) {
   try {
@@ -51,26 +28,20 @@ export async function POST(req: Request) {
       year,
     } = body || {}
 
-    if (!profit_amount || Number(profit_amount) <= 0) {
+    // Validate profit amount
+    const validation = validateProfitAmount(profit_amount)
+    if (!validation.valid) {
       return NextResponse.json(
-        { ok: false, error: 'profit_amount required' },
+        { ok: false, error: validation.error },
         { status: 400 }
       )
     }
-
-    const profitAmountInt = Math.floor(Number(profit_amount))
-    if (profitAmountInt <= 0) {
-      return NextResponse.json(
-        { ok: false, error: 'profit_amount must be whole taka' },
-        { status: 400 }
-      )
-    }
+    const profitAmountInt = validation.intAmount!
 
     const safeProofUrls = Array.isArray(proof_urls) ? proof_urls : []
     const sourceType = String(profit_source_type || '').toUpperCase()
     const normalizedProfitType = String(profit_type || '').toUpperCase()
-    const isBankInterest =
-      normalizedProfitType === 'BANK_INTEREST' || sourceType.startsWith('BANK_')
+    const isBankInterest = isBankInterestType(profit_type, profit_source_type)
 
     // =========================================================
     // BANK INTEREST (HARAM) FLOW
