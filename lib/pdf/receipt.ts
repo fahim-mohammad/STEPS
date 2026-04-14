@@ -1,9 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
-import { jsPDF } from 'jspdf'
-
-const QRCode: any = require('qrcode')
 
 export type ReceiptPdfInput = {
   contribution: any
@@ -40,6 +37,9 @@ export async function generateReceiptPdfBuffer({
   signatures,
   receiptSecret = process.env.RECEIPT_SECRET || 'dev-secret',
 }: ReceiptPdfInput): Promise<Buffer> {
+  // Dynamically import heavy PDF libraries only when this function is called
+  const { jsPDF } = await import('jspdf')
+  const QRCode: any = await import('qrcode')
 
   // A5 landscape: 210mm x 148mm
   const doc = new jsPDF({ unit: 'mm', format: 'a5', orientation: 'landscape' })

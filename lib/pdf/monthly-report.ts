@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import { jsPDF } from 'jspdf'
 
 export type MonthlyFundReportInput = {
   language: 'en' | 'bn'
@@ -59,6 +58,9 @@ const PDF_TEXT = {
  * Generate a PDF buffer (server-friendly) for the monthly fund report.
  */
 export async function generateMonthlyFundReportPdfBuffer(input: MonthlyFundReportInput) {
+  // Dynamically import heavy PDF library only when this function is called
+  const { jsPDF } = await import('jspdf')
+
   const doc = new jsPDF({ unit: 'pt', format: 'a4' })
   const pageW = doc.internal.pageSize.getWidth()
   const pageH = doc.internal.pageSize.getHeight()

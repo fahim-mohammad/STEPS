@@ -1,14 +1,11 @@
 import fs from 'fs'
 import path from 'path'
-import { jsPDF } from 'jspdf'
 import {
   CERTIFICATE_LAYOUTS,
   type CertificateLayout,
   type CertificateTemplateKey,
   type RGB,
 } from './certificate-layouts'
-
-const QRCode: any = require('qrcode')
 
 export type { CertificateTemplateKey } from './certificate-layouts'
 
@@ -391,7 +388,7 @@ function drawMeta(
   )
 }
 
-async function buildQrDataUrl(input: CertificatePdfInput) {
+async function buildQrDataUrl(input: CertificatePdfInput, QRCode: any) {
   if (input.qrDataUrl) return input.qrDataUrl
 
   try {
@@ -454,6 +451,10 @@ function shouldUseTemplateDefaultBody(
 export async function generateCertificatePdfBuffer(
   input: CertificatePdfInput
 ): Promise<Buffer> {
+  // Dynamically import heavy libraries only when this function is called
+  const { jsPDF } = await import('jspdf')
+  const QRCode: any = await import('qrcode')
+
   const doc = new jsPDF({ unit: 'pt', format: 'a4', orientation: 'landscape' })
   const pageW = doc.internal.pageSize.getWidth()
   const pageH = doc.internal.pageSize.getHeight()
@@ -534,7 +535,7 @@ drawBodyText(doc, bodyText, layout, unifiedCenterX, input.templateKey)
     layout.bodyColor
   )
 
-  const qrDataUrl = await buildQrDataUrl(input)
+  const qrDataUrl = await buildQrDataUrl(input, QRCode)
   if (qrDataUrl) {
     try {
       doc.addImage(
