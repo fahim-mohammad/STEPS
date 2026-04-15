@@ -51,9 +51,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@radix-ui', '@supabase'],
   },
-
-  // Turbopack config (required for Next.js 16+)
-  turbopack: {},
 }
 
 export default withBundleAnalyzerConfig(nextConfig)

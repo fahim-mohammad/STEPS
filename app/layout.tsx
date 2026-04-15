@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/icon-192.png",
+    icon: "/favicon.svg",
+    apple: "/apple-icon.png",
+    shortcut: "/icon-192.svg",
   },
   openGraph: {
     title: "STEPS - Fund Management",
@@ -77,12 +77,8 @@ export default function RootLayout({
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         
         {/* Preload critical resources */}
-        <link rel="preload" href="/icon.png" as="image" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        
-        {/* Firebase Service Worker for notifications */}
-        <script async src="https://www.gstatic.com/firebasejs/latest/firebase-app-compat.js"></script>
       </head>
       <body className="min-h-screen bg-background antialiased">
         <ThemeProvider
