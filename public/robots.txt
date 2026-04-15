@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Disallow admin only
+Disallow: /admin/private
+
+# Disallow settings
+Disallow: /settings/private
