@@ -198,6 +198,299 @@ select {
   color: rgba(15, 23, 42, 0.55);
 }
 
+/* =========================================
+   ANIMATIONS & TRANSITIONS
+   ========================================= */
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-colors {
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* =========================================
+   PREMIUM BUTTON STATES
+   ========================================= */
+
+button,
+[role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button:active,
+[role="button"]:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   MOBILE-FIRST RESPONSIVE
+   ========================================= */
+
+/* Full-width buttons on mobile */
+@media (max-width: 640px) {
+  .btn-full-mobile {
+    width: 100%;
+    display: block;
+  }
+
+  /* Prevent horizontal scroll */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  main {
+    overflow-x: hidden;
+  }
+
+  /* Better touch targets on mobile */
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Improve spacing on mobile */
+  .px-4 > * + * {
+    margin-top: 0.5rem;
+  }
+
+  /* No horizontal padding overflow */
+  .container {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}
+
+/* Tablets and up */
+@media (min-width: 641px) {
+  .btn-full-mobile {
+    width: auto;
+    display: inline-block;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+/* =========================================
+   SAFE AREA INSETS (iPhone notch)
+   ========================================= */
+
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+/* =========================================
+   NAVBAR STICKY
+   ========================================= */
+
+.navbar-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.dark .navbar-sticky {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+/* =========================================
+   SCROLL BEHAVIOR
+   ========================================= */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+}
+
+/* =========================================
+   TYPOGRAPHY HIERARCHY
+   ========================================= */
+
+h1 {
+  @apply text-3xl sm:text-4xl font-bold tracking-tight;
+}
+
+h2 {
+  @apply text-2xl sm:text-3xl font-bold tracking-tight;
+}
+
+h3 {
+  @apply text-xl sm:text-2xl font-semibold;
+}
+
+p {
+  @apply text-base text-gray-700 leading-relaxed;
+}
+
+.dark p {
+  @apply text-gray-300;
+}
+
+/* =========================================
+   FORM ELEMENTS
+   ========================================= */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  @apply rounded-lg border border-gray-200 px-4 py-2 transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.dark input[type="text"],
+.dark input[type="email"],
+.dark input[type="password"],
+.dark input[type="number"],
+.dark textarea,
+.dark select {
+  @apply bg-gray-900 border-gray-700 text-white;
+}
+
+/* =========================================
+   CARDS PREMIUM
+   ========================================= */
+
+.card-premium {
+  @apply rounded-2xl p-6 bg-white/50 border border-white/30 backdrop-blur-xl
+         shadow-lg hover:shadow-xl transition-all duration-300;
+}
+
+.dark .card-premium {
+  @apply bg-gray-900/50 border-gray-700/30;
+}
+
+/* =========================================
+   DISABLED STATES
+   ========================================= */
+
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   LOADING STATES
+   ========================================= */
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 .dark ::placeholder {
   color: rgba(248, 250, 252, 0.55);
 }

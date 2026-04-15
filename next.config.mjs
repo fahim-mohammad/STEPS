@@ -16,7 +16,6 @@ const nextConfig = {
     unoptimized: true,
   },
 
-  // ✅ CRITICAL: Reduce serverless bundle size
   serverExternalPackages: [
     'sharp',
     'pdfkit',
@@ -29,9 +28,12 @@ const nextConfig = {
     'pg',
     'puppeteer',
     'qrcode',
+    'firebase',
+    '@firebase/firestore',
+    '@firebase/auth',
+    '@firebase/storage',
   ],
 
-  // ✅ MOVE OUT OF experimental (FIXED)
   outputFileTracingExcludes: {
     '*': [
       './node_modules/@swc/**',
@@ -49,6 +51,9 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['@radix-ui', '@supabase'],
   },
+
+  // Turbopack config (required for Next.js 16+)
+  turbopack: {},
 }
 
 export default withBundleAnalyzerConfig(nextConfig)
