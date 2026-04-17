@@ -5,10 +5,10 @@ import Signature from '@uiw/react-signature/canvas'
 
 type Props = {
   initialValue?: string | null
-  onSave: (dataUrl: string) => Promise<void> | void
+  onSaveAction: (dataUrl: string) => Promise<void> | void
 }
 
-export default function SignaturePad({ initialValue, onSave }: Props) {
+export default function SignaturePad({ initialValue, onSaveAction }: Props) {
   const signatureRef = useRef<any>(null)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -32,7 +32,7 @@ export default function SignaturePad({ initialValue, onSave }: Props) {
         throw new Error('Invalid signature data')
       }
 
-      await onSave(dataUrl)
+      await onSaveAction(dataUrl)
     } catch (e: any) {
       setError(e?.message || 'Failed to save signature')
     } finally {

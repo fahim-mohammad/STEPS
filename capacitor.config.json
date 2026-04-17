@@ -1,0 +1,13 @@
+{
+  "appId": "com.steps.app",
+  "appName": "STEPS",
+  "webDir": "out",
+  "server": {
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

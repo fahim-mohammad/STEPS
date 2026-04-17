@@ -7,7 +7,11 @@ module.exports = {
     "./lib/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: '360px',
+      },
+    },
   },
   plugins: [],
 }

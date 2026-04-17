@@ -119,15 +119,16 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
     try {
       setSubmitting(true)
       const newRequest = await createCommunityJoinRequest(userId)
-      setRequestId(newRequest.id)
+      if (!newRequest) throw new Error('Failed to create request')
+      setRequestId(newRequest!.id)
       setStatus('pending')
       toast({
-        title: t('auto_success_7d481a'),
+        title: 'Success',
         description: t.requestSent,
       })
     } catch (error: any) {
       toast({
-        title: t('auto_error_4a3225'),
+        title: 'Error',
         description: error.message || t.requestError,
         variant: 'destructive',
       })
@@ -167,16 +168,17 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
       
       // Then create the new request
       const newRequest = await createCommunityJoinRequest(userId)
-      setRequestId(newRequest.id)
+      if (!newRequest) throw new Error('Failed to create request')
+      setRequestId(newRequest!.id)
       setStatus('pending')
       toast({
-        title: t('auto_success_7d481a'),
+        title: 'Success',
         description: t.tryAgainSuccess,
       })
     } catch (error: any) {
       const errorMessage = error.message || t.requestError
       toast({
-        title: t('auto_error_4a3225'),
+        title: 'Error',
         description: errorMessage,
         variant: 'destructive',
       })
@@ -221,7 +223,7 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
             {submitting ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                {t('auto_requesting')}
+                Requesting...
               </>
             ) : (
               <>
@@ -250,7 +252,7 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
             {t.waitingButton}
           </Button>
           <p className="text-xs text-white/60 text-center">
-            {t('auto_your_request_is_under_review_by_the_admi')}
+            Your request is under review by the admin.
           </p>
         </div>
       )}
@@ -286,7 +288,7 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
             {submitting ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                {t('auto_requesting_a57c5c')}
+                Requesting...
               </>
             ) : (
               <>
@@ -296,7 +298,7 @@ export function CommunityCard({ userId, language }: CommunityCardProps) {
             )}
           </Button>
           <p className="text-xs text-white/60 text-center">
-            {t('auto_your_request_was_declined_you_can_try_ag')}
+            Your request was declined. You can try again.
           </p>
         </div>
       )}

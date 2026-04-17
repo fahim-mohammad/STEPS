@@ -41,11 +41,10 @@ export default function SignInPage() {
   }, [])
 
   useEffect(() => {
-    if (!isLoading && user) {
+    if (user && (user as any)?.id) {
       router.replace('/dashboard')
-      router.refresh()
     }
-  }, [user, isLoading, router])
+  }, [user])
 
   const handleLanguageChange = (newLang: 'en' | 'bn') => {
     setLanguage(newLang)
@@ -54,31 +53,21 @@ export default function SignInPage() {
     } catch {}
   }
 
- const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setError('')
+    setIsSubmitting(true)
 
-  console.log("FORM SUBMITTED")
-
-  setError("")
-  setIsSubmitting(true)
-
-  try {
-    console.log("LOGIN ATTEMPT", email)
-
-    await login(email.trim(), password)
-
-    console.log("LOGIN SUCCESS")
-
-    router.replace("/dashboard")
-    router.refresh()
-    setTimeout(() => { window.location.href = "/dashboard" }, 120)
-  } catch (err: any) {
-    console.error("LOGIN ERROR", err)
-    setError(err?.message || "Login failed")
-  } finally {
-    setIsSubmitting(false)
+    try {
+      await login(email.trim(), password)
+      // Navigation will happen automatically via useEffect when user state updates
+    } catch (err: any) {
+      console.error('Login error:', err)
+      setError(err?.message || 'Login failed')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
-}
 
   return (
     <div className="min-h-screen">

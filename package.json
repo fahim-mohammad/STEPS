@@ -4,15 +4,22 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:capacitor": "node build-capacitor.js",
+    "build:apk": "npm run build:capacitor && npx cap sync android && echo '✅ APK ready! Open Xcode or Android Studio'",
     "dev": "next dev --webpack",
     "lint": "eslint .",
     "start": "next start",
     "migrate": "node ./scripts/run-migrations.js",
     "seed:chairman": "node scripts/seed-chairman.js",
     "verify:steps": "node scripts/verify-steps.mjs",
-    "verify": "node scripts/verify-steps.mjs"
+    "verify": "node scripts/verify-steps.mjs",
+    "cap:sync": "npx cap sync",
+    "cap:open": "npx cap open android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^7.6.1",
+    "@capacitor/core": "^8.3.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

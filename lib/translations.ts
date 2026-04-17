@@ -736,7 +736,6 @@ export const translations = {
     closeModal: 'Close Modal',
     code: 'Code',
     comments: 'Comments',
-    confirm: 'Confirm',
     confirmDelete: 'Confirm Delete',
     confirmReject: 'Confirm Reject',
     contact: 'Contact',

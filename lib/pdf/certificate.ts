@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { jsPDF } from 'jspdf'
 import {
   CERTIFICATE_LAYOUTS,
   type CertificateLayout,

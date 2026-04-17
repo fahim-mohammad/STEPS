@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { PWAInstall } from "@/components/pwa-install"
 import { ServiceWorkerRegister } from "@/components/service-worker-register"
 
+// For static export: disable automatic dynamic params generation
+export const dynamicParams = false
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,

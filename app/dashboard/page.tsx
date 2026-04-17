@@ -241,34 +241,31 @@ export default function DashboardPage() {
 useEffect(() => {
   if (isLoading) return
 
-  if (!user) {
-    router.replace('/signin')
-    return
-  }
+  // 🚨 IMPORTANT: wait until user is fully ready
+  if (!user || !(user as any).id) return
 
-  const approved = (user as any)?.approved === true
-  const profileCompleted = (user as any)?.profile_completed === true
-  const role = (user as any)?.role
+  const approved = Boolean((user as any)?.approved)
+  const profileCompleted = Boolean((user as any)?.profile_completed)
+  const role = (user as any)?.role || ''
+
   const bio = ((user as any)?.bio || '').trim()
   const signatureUrl = ((user as any)?.signature_data_url || '').trim()
 
-  const isAdmin = role === 'chairman' || role === 'accountant'
-  const needsAdminCompletion = isAdmin && (!bio || !signatureUrl)
+  const isAdminLocal = role === 'chairman' || role === 'accountant'
+  const needsAdminCompletion = isAdminLocal && (!bio || !signatureUrl)
 
+  // 🚫 ONLY redirect AFTER user fully loaded
   if (!approved) {
     router.replace('/pending-approval')
     return
   }
 
-  if (needsAdminCompletion) {
+  if (needsAdminCompletion || !profileCompleted) {
     router.replace('/complete-profile')
     return
   }
 
-  if (!profileCompleted) {
-    router.replace('/complete-profile')
-  }
-}, [isLoading, user, router])
+}, [isLoading, user])
 
   const handleLanguageChange = (newLang: 'en' | 'bn') => {
     setLanguage(newLang)
@@ -827,7 +824,13 @@ useEffect(() => {
     )
   }
 
-  if (!user) return null
+  if (!user || !(user as any)?.id) {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <p className="text-muted-foreground">Loading user...</p>
+    </div>
+  )
+}
 
   const adminQuickActions = [
     {

@@ -66,7 +66,7 @@ export function AdminCommunitySettings({
       } catch (error) {
         console.error('Error loading WhatsApp URL:', error)
         toast({
-          title: t('auto_error'),
+          title: 'Error',
           description: t.error,
           variant: 'destructive',
         })
@@ -83,7 +83,7 @@ export function AdminCommunitySettings({
       // Validate URL if not empty
       if (url && !url.startsWith('https://chat.whatsapp.com/')) {
         toast({
-          title: t('auto_invalid_url'),
+          title: 'Invalid URL',
           description: t.urlFormat,
           variant: 'destructive',
         })
@@ -93,13 +93,13 @@ export function AdminCommunitySettings({
       setSaving(true)
       await setCommunityWhatsappUrl(url || '')
       toast({
-        title: t('auto_success_7d481a'),
+        title: 'Success',
         description: t.success,
       })
     } catch (error) {
       console.error('Error saving WhatsApp URL:', error)
       toast({
-        title: t('auto_error_4a3225'),
+        title: 'Error',
         description: t.error,
         variant: 'destructive',
       })
@@ -163,7 +163,7 @@ export function AdminCommunitySettings({
             className="font-mono text-sm"
           />
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            {t('auto_e_g_https_chat_whatsapp_com_gnevniygnphj')}
+           E.g., https://chat.whatsapp.com/...
           </p>
         </div>
 

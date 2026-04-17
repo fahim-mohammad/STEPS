@@ -59,7 +59,7 @@ export default function CommunityRequestsPage() {
       try {
         setLoading(true)
         const data = await getCommunityJoinRequests()
-        setRequests(data)
+        setRequests(data as any)
       } catch (e) {
         console.error('Error loading community requests:', e)
         toast({

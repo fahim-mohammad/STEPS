@@ -26,7 +26,8 @@ export default function TransparencyPage() {
       // Prefer canonical key, but keep legacy fallback.
       const savedLang = (localStorage.getItem('steps_language') as any) || (localStorage.getItem('steps_lang') as any) || 'en'
       setLanguage(savedLang === 'bn' ? 'bn' : 'en')
-      setTheme(savedTheme === 'dark' ? 'dark' : 'light')
+      const savedTheme = localStorage.getItem('steps_theme') as 'light' | 'dark' | null
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark')
     } catch {
       // ignore
     }

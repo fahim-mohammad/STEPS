@@ -131,42 +131,50 @@ export function Navbar({
   return (
     <header className="sticky top-0 z-[60] w-full">
       <div className="nav-glass">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="h-16 flex items-center justify-between gap-3">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-6">
+          {/* Navbar: 56px mobile, 64px desktop - NO WRAPPING */}
+          <div className="h-14 sm:h-16 flex items-center justify-between gap-2">
+            {/* LEFT: Logo - Fixed, no shrink */}
             <Link
               href="/"
-              className="flex items-center gap-2 hover:opacity-90 transition-opacity min-w-[160px]"
+              className="flex items-center gap-1 sm:gap-2 hover:opacity-90 transition-opacity flex-shrink-0"
             >
-              <div className="icon-glass p-2 rounded-2xl">
-                <StepsLogo size={36} variant="auto" onGlass />
+              <div className="icon-glass p-1 sm:p-2 rounded-2xl inline-flex">
+                <StepsLogo size={32} variant="auto" onGlass />
               </div>
-              <span className="hidden sm:inline text-lg font-bold tracking-tight">
+              <span className="hidden sm:inline text-base sm:text-lg font-bold tracking-tight whitespace-nowrap">
                 STEPS
               </span>
             </Link>
 
-            <div className="flex-1 flex justify-center">
-              <div className="text-[15px] sm:text-base font-semibold tracking-tight">
+            {/* CENTER: Page title - Truncated, min-w-0 to prevent overflow */}
+            <div className="hidden md:flex flex-1 min-w-0 justify-center px-2">
+              <div className="text-sm sm:text-base font-semibold tracking-tight truncate text-center line-clamp-1">
                 {user ? pageTitle : 'STEPS'}
               </div>
             </div>
 
-            <div className="flex items-center gap-2 justify-end min-w-[160px]">
+            {/* RIGHT: Actions - Compact, no wrap, flex-shrink-0 */}
+            <div className="flex items-center gap-1 sm:gap-2 justify-end flex-shrink-0">
+              {/* Language toggle - Icon only on mobile, text on sm+ */}
               <button
                 onClick={() => handleLanguageSave(language === 'en' ? 'bn' : 'en')}
-                className="icon-glass h-10 px-3 rounded-2xl flex items-center gap-2"
+                className="icon-glass h-8 sm:h-9 px-2 sm:px-3 rounded-xl flex items-center gap-1 flex-shrink-0 transition-opacity hover:opacity-80"
                 title={t('language')}
+                aria-label="Toggle language"
               >
-                <Globe className="h-4 w-4" />
-                <span className="text-sm font-medium">
-                  {language === 'en' ? 'Bn' : 'En'}
+                <Globe className="h-4 w-4 flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-medium hidden sm:inline whitespace-nowrap">
+                  {language === 'en' ? 'বাংলা' : 'English'}
                 </span>
               </button>
 
+              {/* Theme toggle - Compact icon button */}
               <button
                 onClick={handleThemeSave}
-                className="icon-glass h-10 w-10 rounded-2xl grid place-items-center"
-                title="Theme"
+                className="icon-glass h-8 sm:h-9 w-8 sm:w-9 rounded-xl grid place-items-center flex-shrink-0 transition-opacity hover:opacity-80"
+                title="Toggle theme"
+                aria-label="Toggle theme"
               >
                 {theme === 'light' ? (
                   <Sun className="h-4 w-4" />
@@ -175,15 +183,23 @@ export function Navbar({
                 )}
               </button>
 
+              {/* Auth section - Compact, no wrap */}
               {!user ? (
-                <div className="flex gap-2">
+                <div className="flex gap-1 sm:gap-2 flex-shrink-0 items-center">
                   <Link href="/signin">
-                    <Button className="btn-glass" variant="outline" size="sm">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm btn-glass"
+                    >
                       {t('signIn')}
                     </Button>
                   </Link>
                   <Link href="/signup">
-                    <Button className="btn-glass" size="sm">
+                    <Button 
+                      size="sm"
+                      className="h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm btn-glass"
+                    >
                       {t('signUp')}
                     </Button>
                   </Link>
@@ -192,10 +208,10 @@ export function Navbar({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button
-                      className="icon-glass h-10 w-10 rounded-2xl grid place-items-center"
-                      aria-label="Menu"
+                      className="icon-glass h-8 sm:h-9 w-8 sm:w-9 rounded-xl grid place-items-center flex-shrink-0 transition-opacity hover:opacity-80"
+                      aria-label="User menu"
                     >
-                      <EllipsisVertical className="h-5 w-5" />
+                      <EllipsisVertical className="h-4 w-4" />
                     </button>
                   </DropdownMenuTrigger>
 

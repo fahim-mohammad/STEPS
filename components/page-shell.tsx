@@ -17,6 +17,7 @@ export default function PageShell({
   rightSlot?: React.ReactNode
   children: React.ReactNode
   className?: string
+  
 }) {
   return (
     <main className={cn('mx-auto max-w-6xl px-4 pb-10 pt-6', className)}>

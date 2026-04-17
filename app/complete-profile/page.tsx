@@ -319,7 +319,7 @@ export default function CompleteProfilePage() {
 
                       <SignaturePad
                         initialValue={signatureUrl || null}
-                        onSave={async (dataUrl) => {
+                        onSaveAction={async (dataUrl: string) => {
                           const res = await fetch('/api/profile/signature', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },

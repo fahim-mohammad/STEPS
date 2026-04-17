@@ -1,0 +1,19 @@
+🏗️  Building Capacitor Android APK...
+
+1️⃣  Cleaning previous builds...
+⚠️  Clean warning: Command failed: /Users/apple/Documents/Websites/STEPS/android/gradlew clean
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+2️⃣  Building APK (this may take 2-5 minutes)...
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+❌ Build failed: Command failed: /Users/apple/Documents/Websites/STEPS/android/gradlew assembleDebug
+
+Troubleshooting:
+- Ensure Android SDK is installed
+- Run: npm install
+- Check gradle.properties for SDK paths

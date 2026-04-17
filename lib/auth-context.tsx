@@ -91,24 +91,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const accessToken = data.session?.access_token
       if (accessToken) setCookie('steps_access_token', encodeURIComponent(accessToken))
 
-      setUser((prev) => ({
-        id: sessionUser.id,
-        email: sessionUser.email || prev?.email || '',
-        name: prev?.name || '',
-        phone: prev?.phone || '',
-        role: prev?.role || 'member',
-        approved: prev?.approved || false,
-        profile_completed: prev?.profile_completed || false,
-        bio: prev?.bio || '',
-        signature_data_url: prev?.signature_data_url || '',
-        createdAt: prev?.createdAt || new Date().toISOString(),
-        suspended: prev?.suspended || false,
-        banned: prev?.banned || false,
-      }))
+      setUser(null)
 
       const profile = await fetchProfile(sessionUser.id)
 
       if (!profile) {
+        setUser(null)
         setEffectiveRoleState('member')
         setCookie('steps_approved', '0')
         return
@@ -181,6 +169,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!data.session) throw new Error('Login failed')
 
     await load()
+
+    return
   }
 
   const signup = async (

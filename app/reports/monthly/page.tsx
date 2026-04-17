@@ -26,8 +26,6 @@ export default function MonthlyReportPage() {
   const [trend, setTrend] = useState<any[]>([])
 
   useEffect(() => {
-    const nextTheme = savedTheme === 'dark' ? 'dark' : 'light'
-    setTheme(nextTheme)
     const savedLang = localStorage.getItem('steps_language') as 'en' | 'bn' | null
     if (savedLang) setLanguage(savedLang)
   }, [])

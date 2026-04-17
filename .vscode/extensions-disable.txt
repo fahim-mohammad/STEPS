@@ -1,0 +1,13 @@
+# VS Code Cache Reset Instructions
+# Run these commands if TypeScript errors persist:
+
+# 1. Close VS Code completely (Command+Q)
+
+# 2. Clear global TypeScript cache:
+rm -rf ~/Library/Application\ Support/Code/User/globalStorage/ms-vscode.vscode-typescript-next/
+rm -rf ~/Library/Application\ Support/Code/extensions/ms-vscode.typescript-*/
+
+# 3. Clear workspace cache:
+rm -rf /Users/apple/Documents/Websites/STEPS/.vscode
+
+# 4. Reopen VS Code

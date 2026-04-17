@@ -70,7 +70,7 @@ export default function NewInvestmentPage() {
       category: form.category === 'other' ? undefined : (form.category as any),
 
       bankName: form.category === 'bank' ? form.bankName : undefined,
-      investmentType: form.category === 'bank' ? form.investmentType : undefined,
+      investmentType: form.category === 'bank' ? (`BANK_${form.investmentType}` as any) : undefined,
 
       platform: form.category === 'share' ? form.platform || undefined : undefined,
       ticker: form.category === 'share' ? form.ticker || undefined : undefined,

@@ -1,0 +1,135 @@
+
+> steps-final-version@1.0.0 build
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ✓ Compiled successfully in 4.7s
+   Skipping validation of types
+   Collecting page data using 7 workers ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   Generating static pages using 7 workers (0/85) ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+ ⚠ metadataBase property in metadata export is not set for resolving social open graph or twitter images, using "http://localhost:3000". See https://nextjs.org/docs/app/api-reference/functions/generate-metadata#metadatabase
+   Generating static pages using 7 workers (21/85) 
+   Generating static pages using 7 workers (42/85) 
+   Generating static pages using 7 workers (63/85) 
+ ✓ Generating static pages using 7 workers (85/85) in 703.6ms
+   Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/action-center
+├ ○ /admin/audit-logs
+├ ○ /admin/audit-logs/advanced
+├ ○ /admin/auto-dues
+├ ○ /admin/certificates
+├ ○ /admin/certificates/new
+├ ○ /admin/charity
+├ ○ /admin/community-requests
+├ ○ /admin/complete-profile
+├ ○ /admin/contribution-rules
+├ ○ /admin/contributions
+├ ○ /admin/disputes
+├ ○ /admin/expenses
+├ ○ /admin/fines
+├ ○ /admin/followups
+├ ○ /admin/investments
+├ ○ /admin/investments/docs
+├ ○ /admin/investments/new
+├ ○ /admin/loans
+├ ○ /admin/members
+├ ● /admin/members/[id]
+├ ○ /admin/messages
+├ ○ /admin/missing-contributors
+├ ○ /admin/payment-gateways
+├ ○ /admin/profit-distribution
+├ ○ /admin/reminders
+├ ○ /admin/reminders/history
+├ ○ /admin/reports
+├ ○ /admin/reports/monthly
+├ ○ /admin/reports/role-based
+├ ○ /admin/suggestions
+├ ○ /admin/system/backup
+├ ○ /admin/system/health
+├ ○ /admin/system/restore
+├ ○ /admin/warnings
+├ ○ /agreement
+├ ○ /apple-icon.png
+├ ○ /banned
+├ ○ /certificates
+├ ○ /charity
+├ ƒ /charity/[id]
+├ ○ /community
+├ ○ /complete-profile
+├ ○ /contract
+├ ○ /contributions
+├ ○ /contributions/calendar
+├ ○ /contributions/new
+├ ○ /contributions/pay
+├ ○ /contributions/submit
+├ ○ /dashboard
+├ ○ /dashboard/members
+├ ○ /dashboard/trends
+├ ○ /disputes
+├ ○ /expenses
+├ ○ /fund-operations
+├ ○ /icon.png
+├ ○ /investments
+├ ƒ /investments/[id]
+├ ○ /ios-ui
+├ ○ /leadership
+├ ○ /loans
+├ ○ /loans/apply
+├ ○ /loans/pay
+├ ○ /members
+├ ƒ /members/[id]
+├ ○ /messages
+├ ○ /pending-approval
+├ ○ /privacy
+├ ○ /profile
+├ ○ /profile/kyc
+├ ○ /profits
+├ ○ /projection
+├ ƒ /receipt/[id]
+├ ƒ /receipt/verify/[id]
+├ ○ /receipts
+├ ○ /reports/monthly
+├ ○ /settings
+├ ○ /setup/complete-profile
+├ ○ /signin
+├ ○ /signup
+├ ○ /statement
+├ ○ /suggestions
+├ ○ /suspended
+├ ○ /terms
+├ ○ /transparency
+├ ○ /verify
+├ ƒ /verify/[certificateId]
+└ ○ /warnings
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

@@ -15,8 +15,8 @@ type Props = {
   myApprovedContributions: number
   nextDueLabel: string
   fundBalance: number
-  onGoPay?: () => void
-  onGoReceipts?: () => void
+  onGoPayAction?: () => void
+  onGoReceiptsAction?: () => void
 }
 
 function money(n: number) {
@@ -31,8 +31,8 @@ export function MemberAISuggestionsCard({
   myApprovedContributions,
   nextDueLabel,
   fundBalance,
-  onGoPay,
-  onGoReceipts,
+  onGoPayAction,
+  onGoReceiptsAction,
 }: Props) {
   const { t } = useTranslations(language)
 
@@ -95,14 +95,14 @@ Your current dues, pending records, and helpful shortcuts are shown below.
         </ul>
 
         <div className="flex flex-wrap gap-2 pt-1">
-          {onGoPay ? (
-            <Button className="btn-glass" onClick={onGoPay}>
+          {onGoPayAction ? (
+            <Button className="btn-glass" onClick={onGoPayAction}>
               {t('ai_member_pay_now')} <ArrowRight className="h-4 w-4 ml-1" />
             </Button>
           ) : null}
 
-          {onGoReceipts ? (
-            <Button variant="outline" className="rounded-xl" onClick={onGoReceipts}>
+          {onGoReceiptsAction ? (
+            <Button variant="outline" className="rounded-xl" onClick={onGoReceiptsAction}>
               {t('ai_member_view_receipts')}
             </Button>
           ) : null}
