@@ -7,8 +7,6 @@ import { PWAInstall } from "@/components/pwa-install"
 import { ServiceWorkerRegister } from "@/components/service-worker-register"
 
 // For static export: disable automatic dynamic params generation
-export const dynamicParams = false
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -32,7 +30,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: ["/icon.png", "/logo-light.jpeg", "/icon-light-32x32.png"],
     apple: "/apple-icon.png",
     shortcut: "/icon-192.svg",
   },

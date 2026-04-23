@@ -81,13 +81,13 @@ try {
 
   // Step 6: Restore config
   console.log('\n⚙️  Restoring next.config.mjs...');
-  const configPath = path.join(rootDir, 'next.config.mjs');
-  let currentConfig = fs.readFileSync(configPath, 'utf8');
+  const restoreConfigPath = path.join(rootDir, 'next.config.mjs');
+  let currentConfig = fs.readFileSync(restoreConfigPath, 'utf8');
   currentConfig = currentConfig.replace(
     "output: 'export',",
     "// output: 'export',  // ONLY used by build-capacitor-static.js script"
   );
-  fs.writeFileSync(configPath, currentConfig);
+  fs.writeFileSync(restoreConfigPath, currentConfig);
   console.log('   ✅ Config restored');
 
   const count = execSync(`find "${outDir}" -type f 2>/dev/null | wc -l`).toString().trim();
@@ -111,13 +111,13 @@ try {
 
   // Restore config
   try {
-    const configPath = path.join(rootDir, 'next.config.mjs');
-    let currentConfig = fs.readFileSync(configPath, 'utf8');
+    const errorConfigPath = path.join(rootDir, 'next.config.mjs');
+    let currentConfig = fs.readFileSync(errorConfigPath, 'utf8');
     currentConfig = currentConfig.replace(
       "output: 'export',",
       "// output: 'export',  // ONLY used by build-capacitor-static.js script"
     );
-    fs.writeFileSync(configPath, currentConfig);
+    fs.writeFileSync(errorConfigPath, currentConfig);
   } catch (e) {
     console.error('Could not restore config:', e.message);
   }
