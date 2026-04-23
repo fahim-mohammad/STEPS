@@ -3,10 +3,7 @@ import "./globals.css"
 
 import { AuthProvider } from "@/lib/auth-context"
 import { ThemeProvider } from "@/components/theme-provider"
-import { PWAInstall } from "@/components/pwa-install"
-import { ServiceWorkerRegister } from "@/components/service-worker-register"
 
-// For static export: disable automatic dynamic params generation
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -19,41 +16,30 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "STEPS - Fund Management",
-  description: "Premium fund management and expense tracking for student communities",
-  manifest: "/manifest.json",
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "black-translucent",
-    title: "STEPS",
-  },
-  formatDetection: {
-    telephone: false,
-  },
+  description: "Student Fund Management Platform",
   icons: {
-    icon: ["/icon.png", "/logo-light.jpeg", "/icon-light-32x32.png"],
+    icon: ["/icon.png", "/logo-light.jpeg"],
     apple: "/apple-icon.png",
-    shortcut: "/icon-192.svg",
-  },
-  openGraph: {
-    title: "STEPS - Fund Management",
-    description: "Premium fund management and expense tracking for student communities",
-    url: "https://steps-self-one.vercel.app",
-    type: "website",
-    images: [
-      {
-        url: "/icon-512.png",
-        width: 512,
-        height: 512,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary",
-    title: "STEPS - Fund Management",
-    description: "Premium fund management and expense tracking",
-    images: ["/icon-512.png"],
   },
 }
+
+// Inline script that runs synchronously before any JS - kills all service workers immediately
+const killServiceWorkers = `
+(function() {
+  try {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(regs) {
+        regs.forEach(function(r) { r.unregister(); });
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        names.forEach(function(n) { caches.delete(n); });
+      });
+    }
+  } catch(e) {}
+})();
+`
 
 export default function RootLayout({
   children,
@@ -63,23 +49,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* PWA Metadata */}
-        <meta name="theme-color" content="#0f172a" />
+        {/* Kill all service workers immediately before any SW can intercept */}
+        <script dangerouslySetInnerHTML={{ __html: killServiceWorkers }} />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="STEPS" />
-        <meta name="application-name" content="STEPS" />
-        <meta name="msapplication-TileColor" content="#0f172a" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
-        
-        {/* Security Headers */}
-        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-        
-        {/* Preload critical resources */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body className="min-h-screen bg-background antialiased">
         <ThemeProvider
@@ -90,8 +65,6 @@ export default function RootLayout({
         >
           <AuthProvider>
             {children}
-            <PWAInstall />
-            <ServiceWorkerRegister />
           </AuthProvider>
         </ThemeProvider>
       </body>

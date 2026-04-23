@@ -1,20 +1,26 @@
-// Service worker disabled - unregisters itself immediately to prevent redirect loops
-self.addEventListener('install', () => {
-  self.skipWaiting()
-})
+// STEPS Service Worker - Self-Destruct Version
+// Immediately unregisters to fix Safari redirect loop issue
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('install', function(event) {
+  // Skip waiting so this activates immediately
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    Promise.all([
-      // Delete all caches
-      caches.keys().then((cacheNames) =>
-        Promise.all(cacheNames.map((cacheName) => caches.delete(cacheName)))
-      ),
+    (async function() {
+      // Claim all open clients immediately
+      await self.clients.claim();
+      // Delete ALL caches
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.map(function(n) { return caches.delete(n); }));
       // Unregister this service worker
-      self.registration.unregister(),
-    ])
-  )
-})
+      await self.registration.unregister();
+    })()
+  );
+});
 
-// Do NOT intercept any fetch requests
-// self.addEventListener('fetch', ...) - intentionally omitted
+// CRITICAL: Pass ALL fetch requests straight to network - no caching, no redirects
+self.addEventListener('fetch', function(event) {
+  event.respondWith(fetch(event.request));
+});
