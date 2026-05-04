@@ -40,17 +40,10 @@ export default function SignInPage() {
     } catch {}
   }, [])
 
-  // Kill SW on signin page load
-  useEffect(() => {
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()))
-      if ('caches' in window) caches.keys().then(keys => keys.forEach(k => caches.delete(k)))
-    }
-  }, [])
-
   useEffect(() => {
     if (!isLoading && user && (user as any)?.id) {
-      router.replace('/dashboard')
+      // Use window.location instead of router to bypass service worker
+      window.location.href = '/dashboard'
     }
   }, [user, isLoading])
 
@@ -68,7 +61,8 @@ export default function SignInPage() {
 
     try {
       await login(email.trim(), password)
-      // Navigation will happen automatically via useEffect when user state updates
+      // Use window.location to bypass service worker redirect loops
+      window.location.href = '/dashboard'
     } catch (err: any) {
       console.error('Login error:', err)
       setError(err?.message || 'Login failed')
