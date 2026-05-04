@@ -40,11 +40,19 @@ export default function SignInPage() {
     } catch {}
   }, [])
 
+  // Kill SW on signin page load
   useEffect(() => {
-    if (user && (user as any)?.id) {
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()))
+      if ('caches' in window) caches.keys().then(keys => keys.forEach(k => caches.delete(k)))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!isLoading && user && (user as any)?.id) {
       router.replace('/dashboard')
     }
-  }, [user])
+  }, [user, isLoading])
 
   const handleLanguageChange = (newLang: 'en' | 'bn') => {
     setLanguage(newLang)
@@ -122,7 +130,7 @@ export default function SignInPage() {
                   <Input
                     id="password"
                     type={showPassword ? 'text' : 'password'}
-                    placeholder="••••••••"
+                    placeholder="********"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isSubmitting}

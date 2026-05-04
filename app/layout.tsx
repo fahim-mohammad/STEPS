@@ -18,28 +18,17 @@ export const metadata: Metadata = {
   title: "STEPS - Fund Management",
   description: "Student Fund Management Platform",
   icons: {
-    icon: ["/icon.png", "/logo-light.jpeg"],
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-light-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: { url: "/apple-icon.png", sizes: "180x180" },
   },
 }
 
-// Inline script that runs synchronously before any JS - kills all service workers immediately
-const killServiceWorkers = `
-(function() {
-  try {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(regs) {
-        regs.forEach(function(r) { r.unregister(); });
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        names.forEach(function(n) { caches.delete(n); });
-      });
-    }
-  } catch(e) {}
-})();
-`
+// Inline script: kill all service workers BEFORE any JS runs
+// This prevents the Safari "Response served by service worker has redirections" error
+const killSW = `(function(){try{if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(s){s.unregister()})})};if('caches' in window){caches.keys().then(function(k){k.forEach(function(c){caches.delete(c)})})}}catch(e){}})();`
 
 export default function RootLayout({
   children,
@@ -49,8 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Kill all service workers immediately before any SW can intercept */}
-        <script dangerouslySetInnerHTML={{ __html: killServiceWorkers }} />
+        <script dangerouslySetInnerHTML={{ __html: killSW }} />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
